@@ -8,7 +8,7 @@ Dent
 
 
 ## More Information
-If you want to learn more about the techniques utlized in this framework please take a look at [blog](place holder)
+If you want to learn more about the techniques utlized in this framework please take a look at this [article](https://www.optiv.com/insights/source-zero/blog/breaking-wdapt-rules-com).
 #
 
 ## Description
