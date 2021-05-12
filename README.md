@@ -1,6 +1,6 @@
 <h1 align="center">
 <br>
-<img src=Screenshots/Dent.png >
+<p align="center"> <img src=Screenshots/dent.png border="2px solid #555">
 <br>
 Dent
 </h1>
