@@ -28,7 +28,7 @@ func VBS_Buff(filename string, COM string, inputFile string) string {
 	var buffer bytes.Buffer
 	vbs := &VBS{}
 	vbs.Variables = make(map[string]string)
-	//Macro variables//
+	//VBA variables//
 	src, _ := ioutil.ReadFile(inputFile)
 	b64ciphertext := base64.StdEncoding.EncodeToString(src)
 	fmt.Println("[*] Creating Varible Names")
