@@ -8,13 +8,13 @@ Dent
 
 
 ## More Information
-If you want to learn more about the techniques utlized in this framework please take a look at this [article](https://www.optiv.com/insights/source-zero/blog/breaking-wdapt-rules-com).
+If you want to learn more about the techniques utilized in this framework please take a look at this [article](https://www.optiv.com/insights/source-zero/blog/breaking-wdapt-rules-com).
 #
 
 ## Description
-This framework generates code to exploit vulnerabilties in Microsoft Defender Advanced Threat Protection's Attack Surface Reduction (ASR) rules to execute shellcode without being detected or prevented. ASR was designed to be the first line of defense, detecting events based on actions that violate a set of rules. These rules focus on specific behavior indicators on the endpoint that are often associated with an attacker’s Tactics, Techniques, or Procedures (TTPs). These rules have a heavy focus on the Microsoft Office suite, as this is a common attack vector for establishing a remote foothold on an endpoint. A lot of the rule-based controls focus on network-based or process-based behavior indicators that stand out from the normal business operation. These rules focus on either the initial compromise of a system or a technique that can severely impact an organization (e.g., disclosure of credentials or ransomware). They cover a large amount of the common attack surface and focus on hampering known techniques used to compromise assets.
+This framework generates code to exploit vulnerabilities in Microsoft Defender Advanced Threat Protection's Attack Surface Reduction (ASR) rules to execute shellcode without being detected or prevented. ASR was designed to be the first line of defense, detecting events based on actions that violate a set of rules. These rules focus on specific behavior indicators on the endpoint that are often associated with an attacker’s Tactics, Techniques, or Procedures (TTPs). These rules have a heavy focus on the Microsoft Office suite, as this is a common attack vector for establishing a remote foothold on an endpoint. A lot of the rule-based controls focus on network-based or process-based behavior indicators that stand out from the normal business operation. These rules focus on either the initial compromise of a system or a technique that can severely impact an organization (e.g., disclosure of credentials or ransomware). They cover a large amount of the common attack surface and focus on hampering known techniques used to compromise assets.
 
-Dent takes advantage of several vulnerabilities to bypass these resticive controls to execute payloads on an endpoint without being blocked or effectively detected by Microsoft Defender Advanced Threat Protection sensors. The article above outlines this vulnerabilties that are STILL present in Microsoft Defender Advanced Threat Protection even after disclosure.  
+Dent takes advantage of several vulnerabilities to bypass these restrictive controls to execute payloads on an endpoint without being blocked or effectively detected by Microsoft Defender Advanced Threat Protection sensors. The article above outlines this vulnerabilities that are STILL present in Microsoft Defender Advanced Threat Protection even after disclosure.  
 
 
 
@@ -45,7 +45,7 @@ Usage of ./Dent:
   -C string
         Name of the COM object.
   -N string
-        Name of the XLL playload when it's writen to disk.
+        Name of the XLL payload when it's written to disk.
   -O string
         Name of the output file. (default "output.txt")
   -P string
@@ -57,18 +57,18 @@ Usage of ./Dent:
 ```
 
 ### Weaponizing 
-This framwork is intended for exploiting vulnerabilities and deficiencies in Microsoft Defender Advanced Threat Protection, because of that it does not actually generate any payloads/implants. In order to generate those, you can use a large number of tools publicly availalble, however all research, development and testing was done using [ScareCrow](https://github.com/optiv/ScareCrow). Microsoft Defender Advanced Threat Protection doesn't rely on userland hooking for telemetry rather it utilized various other mechanisms such as kernel callbacks. From testing, this framework works extremely well at bypassing Microsoft Defender Advanced Threat Protection to execute shellcode. 
+This framework is intended for exploiting vulnerabilities and deficiencies in Microsoft Defender Advanced Threat Protection, because of that it does not actually generate any payloads/implants. In order to generate those, you can use a large number of tools publicly available, however all research, development and testing was done using [ScareCrow](https://github.com/optiv/ScareCrow). Microsoft Defender Advanced Threat Protection doesn't rely on userland hooking for telemetry rather it utilized various other mechanisms such as kernel callbacks. From testing, this framework works extremely well at bypassing Microsoft Defender Advanced Threat Protection to execute shellcode. 
 
 
 ## Techniques
 
-At the time of release there are currently two techniques. I will be constantly adding different ones that utilize these vulnerabilities in different ways peroidically so please stay tuned for more. 
+At the time of release there are currently two techniques. I will be constantly adding different ones that utilize these vulnerabilities in different ways periodically so please stay tuned for more. 
 
 
 ## Fake COM Object Mode
 
 
-COM objects are often created when an application is being installed on to a system. Once created, any application or script can call them, however this isn't the only way to create them. By modifying/creating registry keys into the `HKEY_CLASSES_ROOT` section of the Windows Registry, we can create a COM object that points to our shellcode on the system. This means any application or script that can utlize COM can call it, executing the shellcode.
+COM objects are often created when an application is being installed on to a system. Once created, any application or script can call them, however this isn't the only way to create them. By modifying/creating registry keys into the `HKEY_CLASSES_ROOT` section of the Windows Registry, we can create a COM object that points to our shellcode on the system. This means any application or script that can utilize COM can call it, executing the shellcode.
 
 This works because of how CoCreatInstance API functions. CoCreateInstance is used to create and initialize COM objects based on the CLSID (a globally unique identifier used to identify a specific COM class object). This function pulls the information to execute the call using the values stored in registry keys. These CLSID values can be found in the `HKEY_CLASSES_ROOT\CLSID\` path of the registry. However, before a process can call the CLSID, it must know that CLSID's value. This is done by first performing a registry query to look for the COM object in `HKEY_CLASSES_ROOT\<COM object name>`, and if it exists, a second registry query will be made to get the CLSID value stored in the subfolder.
 
@@ -79,7 +79,7 @@ Further inspection of the registry's subfolders shows the permission for the CLS
 
 **Important**
 
-The creation of these registry keys only works if you run it under an elevated context. Double clicking on this through a GUI will not execute the .VBS file in an elevated context even if you are an administator. It is recommened you run it from an Administative shell or command prompt. However, once the keys are created, any application can call this COM object under any context. 
+The creation of these registry keys only works if you run it under an elevated context. Double clicking on this through a GUI will not execute the .VBS file in an elevated context even if you are an administrator. It is recommended you run it from an Administrative shell or command prompt. However, once the keys are created, any application can call this COM object under any context. 
 
 ### ScareCrow Weaponizing 
 
