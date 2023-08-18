@@ -1,3 +1,8 @@
+# THIS REPOSITORY HAS BEEN ARCHIVED
+
+To view the latest version of Dent or to submit an issue, reference https://github.com/Tylous/Dent.
+
+
 <h1 align="center">
 <br>
 <p align="center"> <img src=Screenshots/dent.png border="2px solid #555">
