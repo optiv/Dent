@@ -20,7 +20,7 @@ type FlagOptions struct {
 func options() *FlagOptions {
 	outFile := flag.String("O", "output.txt", "Name of output file.")
 	URL := flag.String("U", "", "The base URL where the base64 encoded XLL payload is hosted")
-	Name := flag.String("N", "", "Name of the XLL or DLL playload when its written to disk.")
+	Name := flag.String("N", "", "Name of the XLL or DLL payload when its written to disk.")
 	COM := flag.String("C", "", "Name of the COM object.")
 	filename := flag.String("F", "", "Name of the file hosted on the URL.")
 	inputFile := flag.String("I", "", "")
